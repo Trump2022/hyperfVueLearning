@@ -41,6 +41,7 @@ class JwtAuthMiddleware implements MiddlewareInterface
             ($claims->iss ?? null) !== $expectedIssuer
             || $userId === false
             || $userId < 1
+            || ($claims->purpose ?? null) !== 'access'
         ) {
             return $this->unauthorized();
         }

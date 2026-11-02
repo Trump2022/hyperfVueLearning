@@ -31,6 +31,7 @@ class JwtService
             'iat' => $now,
             'exp' => $now + $ttl,
             'jti' => bin2hex(random_bytes(16)),
+            'purpose' => 'access',
         ], $this->secret(), 'HS256');
 
         return [
@@ -38,6 +39,21 @@ class JwtService
             'token_type' => 'bearer',
             'expires_in' => $ttl,
         ];
+    }
+
+    public function issueEmailVerification(int|string $userId, string $email): string
+    {
+        $now = time();
+
+        return JWT::encode([
+            'iss' => $this->config->get('jwt.issuer', 'hyperfVueLearning'),
+            'sub' => (string) $userId,
+            'purpose' => 'email_verification',
+            'email_hash' => hash('sha256', strtolower(trim($email))),
+            'iat' => $now,
+            'exp' => $now + 86400,
+            'jti' => bin2hex(random_bytes(16)),
+        ], $this->secret(), 'HS256');
     }
 
     public function decode(string $token): object

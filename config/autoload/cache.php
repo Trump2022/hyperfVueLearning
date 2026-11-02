@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 use Hyperf\Cache\Driver\RedisDriver;
 use Hyperf\Codec\Packer\PhpSerializerPacker;
+use function Hyperf\Support\env;
 
 return [
     'default' => 'default',
@@ -18,7 +19,8 @@ return [
         'default' => [
             'driver' => RedisDriver::class,
             'packer' => PhpSerializerPacker::class,
-            'prefix' => 'c:',
+            // 'prefix' => 'c:',
+            'prefix' => env('CACHE_PREFIX', 'c:'),
             'skip_cache_results' => [],
         ],
     ],

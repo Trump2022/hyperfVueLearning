@@ -12,7 +12,22 @@ declare(strict_types=1);
 use Hyperf\HttpServer\Router\Router;
 
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
+Router::get('/api/ping', 'App\Controller\IndexController@ping');
 
 Router::get('/favicon.ico', function () {
     return '';
 });
+
+Router::get(
+    '/api/protected',
+    [\App\Controller\IndexController::class, 'protected'],
+    ['middleware' => [\App\Middleware\DemoTokenMiddleware::class]]
+);
+
+Router::get('/api/parallel', 'App\Controller\IndexController@parallel');
+Router::get('/api/go', 'App\Controller\IndexController@goDemo');
+Router::get('/api/redis-demo', 'App\Controller\IndexController@redisDemo');
+Router::get('/api/db-demo', 'App\Controller\IndexController@dbDemo');
+
+
+

@@ -24,4 +24,20 @@ class ExampleTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee('Hyperf');
     }
+
+    public function testPingRouteReturnsJson(): void
+    {
+        // $this->get('/api/ping')->assertOk()->assertSee('pong')->assertSee('ok');
+        // $this->get('/api/ping')->assertOk()->assertJson(['pong' => 'ok']);
+
+        $response = $this->get('/api/ping');
+
+        $response->assertOk()->assertJson(['pong' => 'ok']);
+
+        self::assertSame(
+            'passed',
+            $response->getHeaderLine('X-Learning-Middleware')
+        );
+        
+    }
 }

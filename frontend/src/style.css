@@ -1,0 +1,275 @@
+:root {
+    font-family: "Avenir Next", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    color: #172a26;
+    background: #f4f6f1;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --ink: #172a26;
+    --muted: #64736e;
+    --line: #d7dfd8;
+    --green: #176b52;
+    --orange: #e87852;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(#e9eee8 1px, transparent 1px), linear-gradient(90deg, #e9eee8 1px, transparent 1px);
+    background-size: 34px 34px;
+}
+
+button,
+code,
+pre {
+    font: inherit;
+}
+
+.page-shell {
+    width: min(100% - 48px, 920px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 0 32px;
+}
+
+.topbar {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.wordmark-icon {
+    color: var(--green);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.wordmark-icon span {
+    color: var(--orange);
+}
+
+.environment {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.environment-dot {
+    width: 7px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #4b9b70;
+}
+
+.intro {
+    max-width: 650px;
+    padding: 84px 0 46px;
+}
+
+.eyebrow {
+    margin: 0 0 20px;
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+}
+
+.eyebrow span {
+    padding: 0 5px;
+    color: var(--orange);
+}
+
+h1 {
+    margin: 0;
+    font-size: 68px;
+    font-weight: 680;
+    line-height: 1.08;
+}
+
+h1 span {
+    color: var(--green);
+}
+
+.intro-copy {
+    max-width: 470px;
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.api-console {
+    overflow: hidden;
+    border: 1px solid #cbd6ce;
+    background: #fbfcf9;
+    box-shadow: 0 14px 36px rgb(30 55 45 / 8%);
+}
+
+.request-row {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    gap: 17px;
+    padding: 14px 18px 14px 23px;
+    border-bottom: 1px solid var(--line);
+}
+
+.http-method {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.request-row code {
+    flex: 1;
+    color: var(--ink);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 14px;
+}
+
+.request-row button {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 14px;
+    padding: 0 15px;
+    border: 0;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.request-row button:hover:not(:disabled) {
+    background: #0e573f;
+}
+
+.request-row button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.request-row button span {
+    color: #b8e4ce;
+    font-size: 17px;
+}
+
+.response-area {
+    min-height: 150px;
+    padding: 18px 23px 24px;
+}
+
+.response-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.response-state {
+    color: var(--green);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 10px;
+}
+
+.response-state-error,
+.error-message {
+    color: #b84d38;
+}
+
+pre,
+.empty-response,
+.error-message {
+    margin: 18px 0 0;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+pre {
+    color: var(--ink);
+    font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.empty-response {
+    color: #8a9690;
+}
+
+.page-footer {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding-top: 25px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.footer-connector {
+    width: 22px;
+    height: 1px;
+    background: var(--orange);
+}
+
+.footer-port {
+    margin-left: auto;
+    font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.footer-port span {
+    padding: 0 6px;
+    color: var(--orange);
+}
+
+@media (max-width: 520px) {
+    .page-shell {
+        width: min(100% - 32px, 920px);
+    }
+
+    .intro {
+        padding: 66px 0 34px;
+    }
+
+    h1 {
+        font-size: 46px;
+    }
+
+    .request-row {
+        gap: 11px;
+        padding-right: 12px;
+        padding-left: 14px;
+    }
+
+    .request-row button {
+        gap: 8px;
+        padding: 0 11px;
+        white-space: nowrap;
+    }
+
+    .response-area {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}

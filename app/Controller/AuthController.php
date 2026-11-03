@@ -207,9 +207,7 @@ class AuthController extends AbstractController
         }
 
         $userId = filter_var($claims->sub ?? null, FILTER_VALIDATE_INT);
-        $expectedIssuer = (string) \Hyperf\Support\make(\Hyperf\Contract\ConfigInterface::class)
-            ->get('jwt.issuer', 'hyperfVueLearning');
-
+        $expectedIssuer = (string)$this->config->get('jwt.issuer', 'hyperfVueLearning');
         if (
             ($claims->iss ?? null) !== $expectedIssuer
             || ($claims->purpose ?? null) !== 'email_verification'
@@ -246,9 +244,7 @@ class AuthController extends AbstractController
     private function sendVerificationEmail(User $user): void
     {
         $token = $this->jwt->issueEmailVerification($user->id, $user->email);
-        $url = (string) $this->request->getUri()
-            ->withPath('/api/auth/verify-email')
-            ->withQuery('token=' . rawurlencode($token));
+        $url = $this->frontendLink('/verify-email', ['token' => $token]);
         $safeUrl = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
         $this->mail->send(
@@ -257,6 +253,18 @@ class AuthController extends AbstractController
             "请在 24 小时内打开此链接完成验证：\n{$url}",
             "<p>请在 24 小时内点击以下链接完成邮箱验证：</p><p><a href=\"{$safeUrl}\">验证邮箱</a></p>",
         );
+    }
+
+    /**
+     * @param string $path
+     * @param array $query
+     * @return string
+     */
+    private function frontendLink(string $path, array $query = []): string
+    {
+        $base = rtrim((string) $this->config->get('mail.frontend_url', ''), '/');
+
+        return $base . $path . ($query === [] ? '' : '?' . http_build_query($query));
     }
 
     /**
@@ -303,13 +311,11 @@ class AuthController extends AbstractController
         $resetRecord->created_at = date('Y-m-d H:i:s');
         $resetRecord->save();
 
-        $resetUrl = rtrim(
-                (string) $this->config->get('mail.frontend_url', 'http://localhost:5173'),
-                '/',
-            ) . '/reset-password?' . http_build_query([
-                'email' => $email,
-                'token' => $token,
-            ]);
+
+        $resetUrl = $this->frontendLink('/reset-password', [
+            'email' => $email,
+            'token' => $token,
+        ]);
 
         try {
             $safeUrl = htmlspecialchars($resetUrl, ENT_QUOTES, 'UTF-8');
